@@ -1,12 +1,17 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
+import 'pages/login.dart';
+
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
+  MyApp({Key? key}) : super(key: key);
+  final Future<FirebaseApp> _initializer = Firebase.initializeApp();
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -15,7 +20,20 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: FutureBuilder<FirebaseApp>(future: _initializer, 
+      builder: (BuildContext context, AsyncSnapshot<FirebaseApp> snapshot) {
+        if(snapshot.hasError) {
+          return const Center(child: Text("oh no bro")); 
+        }
+
+        if(snapshot.connectionState == ConnectionState.done) {
+          return const MyHomePage(title: "Flutter Demo bro");
+        } else {
+          return const Center(child: CircularProgressIndicator(),);
+        }
+      }
+      
+      ),
     );
   }
 }
@@ -30,44 +48,20 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  
   @override
   Widget build(BuildContext context) {
+    return StreamBuilder<User?>(
+      stream: _auth.authStateChanges(),
+      builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
 
-    return Scaffold(
-      appBar: AppBar(
-
-
-        title: Text(widget.title),
-      ),
-      body: Center(
-
-        child: Column(
-
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), 
+        if (snapshot.data == null)  {
+          return const LoginPage();
+        } else {
+          return const Scaffold(body: Text("bruh"),);
+        }
+      }
     );
   }
 }
