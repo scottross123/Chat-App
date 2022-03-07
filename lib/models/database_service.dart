@@ -1,12 +1,15 @@
 import 'dart:async';
 
+import 'package:chat_app/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:mad_examples/user.dart';
+
 
 class DatabaseService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   static Map<String, User> userMap = <String, User>{};
+  static List<String> displayNames = <String>[];
+
 
   final StreamController<Map<String, User>> _usersController =
       StreamController<Map<String, User>>();
@@ -27,6 +30,7 @@ class DatabaseService {
     for (var element in snapshot.docs) {
       User user = User.fromJson(element.id, element.data());
       userMap[user.id] = user;
+      displayNames.add(user.displayName);
     }
 
     return userMap;

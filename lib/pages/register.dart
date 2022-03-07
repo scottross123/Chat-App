@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../models/database_service.dart';
 import 'login.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -35,7 +36,7 @@ class _Register extends State<RegisterPage> {
               validator: (String? text) {
                 if (text == null || text.isEmpty)
                   return "You can't leave this field blank!";
-                else if (DatabaseService.usernames.contains(text))
+                else if (DatabaseService.displayNames.contains(text))
                   return "Username already exists!!! Pick a different one.";
                 return null;
               },
@@ -115,8 +116,8 @@ class _Register extends State<RegisterPage> {
     if(_formKey.currentState!.validate()) {
       try {
         await auth.createUserWithEmailAndPassword(email: email.text, password: password.text);
-        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const LoginPage()));
         _loading = false;
+        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const LoginPage()));
       } on FirebaseAuthException catch(e) {
         if(e.code == "no-email" || e.code == "wrong-password")
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Incorrect register information!!!")));

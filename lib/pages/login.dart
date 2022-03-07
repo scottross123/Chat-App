@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'homepage.dart';
 import 'register.dart';
 
 class LoginPage extends StatefulWidget {
@@ -85,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
     if(_formKey.currentState!.validate()) {
       try {
         await auth.signInWithEmailAndPassword(email: email.text, password: password.text);
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>const MyHomePage(title: '',)));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>const HomePage(title: '',)));
         _loading = false;
       } on FirebaseAuthException catch(e) {
         if(e.code == "wrong-email" || e.code == "wrong-password")
