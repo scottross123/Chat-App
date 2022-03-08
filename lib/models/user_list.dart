@@ -9,8 +9,7 @@ class UserList extends StatefulWidget {
 }
 
 class _UserListState extends State<UserList> {
-  // final FirebaseFirestore _db = FirebaseFirestore.instance;
-  CollectionReference users = FirebaseFirestore.instance.collection("users");
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +31,7 @@ class _UserListState extends State<UserList> {
                 User.fromJson(doc.id, doc.data() as Map<String, dynamic>);
             return ListTile(
               title: Text(user.displayName),
-              subtitle: Text(user.role),
+              subtitle: Text(user.displayName),
             );
           }).toList());
         },

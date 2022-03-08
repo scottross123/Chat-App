@@ -2,6 +2,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'chatpage.dart';
 import 'login.dart';
 
 class HomePage extends StatefulWidget {
@@ -26,9 +27,7 @@ class _HomePageState extends State<HomePage> {
           return const LoginPage();
         } else {
           return Scaffold(
-            body: Container(
-              child: Center(child: Text("Chat")),
-            ),
+            body: ChatPage(),
             bottomNavigationBar: BottomNavigationBar(
               selectedItemColor: Colors.red,
               unselectedItemColor: Colors.grey.shade600,
