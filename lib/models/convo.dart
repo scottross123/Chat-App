@@ -1,0 +1,46 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class Convo {
+  Convo(
+    {required this.id, 
+    required this.userIds, 
+    required this.lastMessage});
+
+  factory Convo.fromMap(String id, Map<String, dynamic> data) {
+    return Convo(
+        id: id,
+        userIds: data['users'] ?? <dynamic>[],
+        lastMessage: data['lastMessage'] ?? <dynamic>{}
+    );
+  }
+
+  String id;
+  List<dynamic> userIds;
+  Map<dynamic, dynamic> lastMessage;
+}
+
+class Message {
+  Message(
+    {required this.id, 
+    required this.content, 
+    required this.idFrom, 
+    required this.idTo, 
+    required this.timestamp});
+
+  factory Message.fromMap(String id, Map<String, dynamic> data) {
+
+    return Message(
+      id: id,
+      content: data['content'],
+      idFrom: data['idFrom'],
+      idTo: data['idTo'],
+      timestamp: data['timestamp']
+    );
+  }
+
+  String id;
+  String content;
+  String idFrom;
+  String idTo;
+  DateTime timestamp;
+}

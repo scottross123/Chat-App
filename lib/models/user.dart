@@ -1,26 +1,28 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class User {
-  final String id;
-  final String displayName;
-  final String messageText;
-  final String imageURL;
-  final String time;
-  
-  User({required this.id, required this.displayName, required this.messageText, required this.imageURL, required this.time});
+  User(
+      {required this.id,
+      required this.name,
+      required this.email,
+      required this.created});
 
-  User.fromJson(String id, Map<String, dynamic> json) : this(
-    id: id,
-    displayName: json["display_name"],
-    messageText: json["message_text"],
-    imageURL: json["image_url"],
-    time: json["time"]
-  );
-
-  Map<String, Object?> toJson(){
-    return {
-      "display_name" : displayName,
-      "message_text" : messageText,
-      "image_url" : imageURL,
-      "time" : time
-    };
+  factory User.fromMap(String id, Map<String, dynamic> data) {
+    return User(
+      id: id,
+      name: data['name'],
+      email: data['email'],
+      created: data['created'],
+    );
   }
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'email': email,
+        'created': created,
+      };
+
+  final String id;
+  final String name;
+  final String email;
+  final Timestamp created;
 }
