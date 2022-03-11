@@ -8,8 +8,8 @@ import 'package:provider/provider.dart';
 
 class ConversationProvider extends StatelessWidget {
   const ConversationProvider({
-    required Key key,
-    @required this.user,
+     Key? key,
+    required this.user,
   }) : super(key: key);
 
   final User user;
@@ -18,23 +18,25 @@ class ConversationProvider extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamProvider<List<Convo>>.value(
         value: Database.streamConversations(user.uid),
+        initialData: [],
         child: ConversationDetailsProvider(user: user));
   }
 }
 
 class ConversationDetailsProvider extends StatelessWidget {
   const ConversationDetailsProvider({
-    required Key key,
-    @required this.user,
+    Key? key,
+    required this.user,
   }) : super(key: key);
 
   final User user;
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<List<User>>.value(
+    return StreamProvider<List<ChatUser>>.value(
         value: Database.getUsersByList(
             getUserIds(Provider.of<List<Convo>>(context))),
+        initialData: [],
         child: HomeBuilder());
   }
 

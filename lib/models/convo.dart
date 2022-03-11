@@ -6,11 +6,12 @@ class Convo {
     required this.userIds, 
     required this.lastMessage});
 
-  factory Convo.fromMap(String id, Map<String, dynamic> data) {
+  factory Convo.fromFireStore(DocumentSnapshot doc) {
+    final Map<String, dynamic> data = doc.data as Map<String, dynamic>;
     return Convo(
-        id: id,
-        userIds: data['users'] ?? <dynamic>[],
-        lastMessage: data['lastMessage'] ?? <dynamic>{}
+        id: doc.id,
+        userIds: data!['users'] ?? <dynamic>[],
+        lastMessage: data!['lastMessage'] ?? <dynamic>{}
     );
   }
 
