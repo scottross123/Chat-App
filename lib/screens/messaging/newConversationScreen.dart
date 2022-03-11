@@ -6,12 +6,12 @@ import 'package:chat_app/services/database.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class NewConversationScreen extends StatelessWidget {
-  const NewConversationScreen(
+  NewConversationScreen(
       {required this.uid, 
       required this.contact, 
       required this.convoID});
   final String uid, convoID;
-  final ChatUser contact;
+  ChatUser contact;   
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +44,8 @@ class NewConversationScreen extends StatelessWidget {
                                 ),
                                 onRatingUpdate: (rating) {
                                   print(rating);
+                                  contact.rating = rating;
+                                  Database.updateRating(contact.id, contact.rating);
                                 },
                               ), 
                             );
@@ -229,4 +231,5 @@ class _ChatScreenState extends State<ChatScreen> {
           duration: Duration(milliseconds: 300), curve: Curves.easeOut);
     }
   }
+
 }

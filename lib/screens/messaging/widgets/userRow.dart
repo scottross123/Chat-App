@@ -12,13 +12,14 @@ class UserRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(contact.rating);
     return GestureDetector(
       onTap: () => createConversation(context),
       child: Container(
           margin: EdgeInsets.all(10.0),
           padding: EdgeInsets.all(10.0),
           child: Center(
-              child: Text(contact.displayName,
+              child: Text(contact.displayName + "     " + contact.rating.toString(),
                   style:
                       TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold)))),
     );

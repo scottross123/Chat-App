@@ -102,7 +102,7 @@ class Database {
   static void updateLastMessage(
       DocumentSnapshot doc, String uid, String pid, String convoID) {
     final DocumentReference documentReference =
-        FirebaseFirestore.instance.collection('messages').doc(convoID);
+        _db.collection('messages').doc(convoID);
 
     documentReference
         .set(<String, dynamic>{
@@ -120,4 +120,10 @@ class Database {
           print(error);
         });
   }
+
+  static void updateRating(String id, double rating) {
+    final DocumentReference documentReference = _db.collection('users').doc(id);
+    documentReference.update({'rating': rating});
+  }
+  
 }
