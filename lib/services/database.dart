@@ -125,5 +125,5 @@ class Database {
     final DocumentReference documentReference = _db.collection('users').doc(id);
     documentReference.update({'rating': rating});
   }
-  
+
 }

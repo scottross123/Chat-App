@@ -20,6 +20,7 @@ class NewConversationScreen extends StatelessWidget {
             AppBar(
               automaticallyImplyLeading: true, 
               title: Text(contact.displayName),
+              backgroundColor: Colors.black,
               actions: <Widget>[
                   Padding(
                     padding: EdgeInsets.only(right: 20.0),
@@ -29,7 +30,7 @@ class NewConversationScreen extends StatelessWidget {
                           context: context, 
                           builder: (context) {
                             return Dialog(
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                               elevation: 16,
                               child: RatingBar.builder(
                                 initialRating: 3,

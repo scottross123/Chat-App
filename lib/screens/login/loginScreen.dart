@@ -5,12 +5,18 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Login')),
+      appBar: AppBar(title: Text('Login'), backgroundColor: Colors.black),
       body: Container(
           child: Center(
-        child: FlatButton(
-          child: Text('Sign in with Google'),
-          onPressed: Authentication.handleLogin,
+        child: OutlinedButton(
+            style: TextButton.styleFrom(
+            primary: Colors.blue,
+            padding: EdgeInsets.symmetric(horizontal: 26.0),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(3.0)),
+            ),),
+            child: Text('Sign in with Google'),
+            onPressed: Authentication.handleLogin,
         ),
       )),
     );

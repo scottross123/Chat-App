@@ -10,7 +10,7 @@ class NewMessageScreen extends StatelessWidget {
     final User user = Provider.of<User>(context);
     final List<ChatUser> userDirectory = Provider.of<List<ChatUser>>(context);
     return Scaffold(
-      appBar: AppBar(title: Text('Select Contact')),
+      appBar: AppBar(title: Text('Choose a contact!!'), backgroundColor: Colors.black),
       body: user !=null && userDirectory != null
           ? ListView(
               shrinkWrap: true, children: getListViewItems(userDirectory, user))

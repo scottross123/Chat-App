@@ -13,32 +13,52 @@ class HomeBuilder extends StatelessWidget {
     final User firebaseUser = Provider.of<User>(context);
     final List<Convo> _convos = Provider.of<List<Convo>>(context);
     final List<ChatUser> _users = Provider.of<List<ChatUser>>(context);
+
+    double averageRating() {
+      var total = 0.0;
+
+      _users.forEach((user) { 
+        print("fuck me" + user.toString());
+        print(user.rating);
+        total += user.rating;
+      });
+
+      print("fuck me more" + _users.length.toString());
+      print(total / _users.length);
+
+      return total / _users.length;
+    }
+
+
     return Scaffold(
       appBar: AppBar(
-          title: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          const IconButton(
-              onPressed: Authentication.handleLogout,
-              icon: const Icon(Icons.first_page, size: 30)),
-          Text("fuck you", style: const TextStyle(fontSize: 18)),
-          IconButton(
-              onPressed: () => createNewConvo(context),
-              icon: const Icon(Icons.add, size: 30))
-        ],
-      )),
-      body: ListView(
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          children: getWidgets(context, firebaseUser, _convos, _users))
-    );
-  }
+        backgroundColor: Colors.black,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            const IconButton(
+                onPressed: Authentication.handleLogout,
+                icon: const Icon(Icons.first_page, size: 30)),
+            Text(firebaseUser.displayName! + "'s Profile", style: const TextStyle(fontSize: 20)),
+            IconButton(
+                onPressed: () => createNewConvo(context),
+                icon: const Icon(Icons.add, size: 30))
+          ],
+        )),
+        body: ListView(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            children: getWidgets(context, firebaseUser, _convos, _users))
+      );
+    }
 
   void createNewConvo(BuildContext context) {
     Navigator.of(context).push<dynamic>(MaterialPageRoute<dynamic>(
         builder: (BuildContext context) => NewMessageProvider()));
   }
+
+
 
   Map<String, ChatUser> getUserMap(List<ChatUser> users) {
     final Map<String, ChatUser> userMap = Map();
@@ -71,3 +91,4 @@ class HomeBuilder extends StatelessWidget {
     return list;
   }
 }
+
